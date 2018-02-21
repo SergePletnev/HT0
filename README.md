@@ -1,1 +1,1 @@
-# EPAM Training Home Task 0
+# EPAM Training: Home Task 0
