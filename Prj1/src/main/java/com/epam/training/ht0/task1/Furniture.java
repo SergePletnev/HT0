@@ -53,7 +53,6 @@ public class Furniture {
             sb.append(this.getName()).append("(area from ").append(this.minAreaOccupied).append(") m^2 to ")
                     .append(this.maxAreaOccupied).append(" m^2)");
         }
-
-        return super.toString();
+        return sb.toString();
     }
 }

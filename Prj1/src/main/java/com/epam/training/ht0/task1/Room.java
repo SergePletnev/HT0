@@ -69,7 +69,7 @@ public class Room {
     }
 
     public void addFurniture(Furniture furniture) throws SpaceUsageTooMuchException {
-        if ((this.getOccupiedArea() + furniture.getMaxAreaOccupied()) / area <= 0.7) {
+        if ((this.getOccupiedArea()[1] + furniture.getMaxAreaOccupied()) / area <= 0.7) {
             this.furnitureList.add(furniture);
         } else {
             throw new SpaceUsageTooMuchException("Occupied area of the room '" + this.name +
@@ -77,30 +77,55 @@ public class Room {
         }
     }
 
-    public double getOccupiedArea() {
-        double area = 0;
+    public double[] getOccupiedArea() {
+        double[] area = new double[2];
         for (Furniture furniture : this.furnitureList) {
-            area += furniture.getMaxAreaOccupied();
+            area[0] += furniture.getMinAreaOccupied();
+            area[1] += furniture.getMaxAreaOccupied();
         }
         return area;
     }
 
-    //TODO
     @Override
     public String toString() {
- /*       Здание 1
-        Комната 1
-        Освещённость = 2500 (3 окна по 700 лк, лампочки 150 лк и 250 лк)
-        Площадь = 100 м^2 (занято 4-5 м^2, гарантированно свободно 95 м^2 или 95% площади)
-        Мебель:
-        Стол письменный (площадь 3 м^2)
-        Кресло мягкое и пушистое (площадь от 1 м^2 до 2 м^2)
-        Комната 2
-        Освещённость = 1400 (2 окна по 700 лк)
-        Площадь = 5 м^2 (свободно 100%)
-        Мебели нет
-                */
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.name).append("\n");
+        sb.append("Illumination = ").append(this.getIllumination());
+        sb.append(" (").append(this.windows.size()).append(" windows ").append(Window.DEFAULT_LUMINOSITY).append(" lux");
+        if (this.bulbs.size() == 0) {
+            sb.append(")\n");
+        } else {
+            sb.append(", bulbs ");
+            for (int i = 0; i < this.bulbs.size(); i++) {
+                if (i == this.bulbs.size()) {
+                    sb.append(this.bulbs.get(i).getLuminosity()).append(" lux)");
+                }
+                sb.append(this.bulbs.get(i).getLuminosity()).append(" lux and ");
+            }
+        }
+        sb.append("Area = ").append(this.area).append(" m^2 (");
 
-        return super.toString();
+        if (this.furnitureList.size() == 0) {
+            sb.append("100% free)\n");
+        } else {
+            if (this.getOccupiedArea()[0] == this.getOccupiedArea()[1]) {
+                sb.append(this.getOccupiedArea()[1]).append(" m^2, guaranteed free ").append(this.area - this.getOccupiedArea()[0])
+                        .append(" m^2 or ").append(Math.round((1 - this.getOccupiedArea()[1] / this.area) * 100)).append(" % of area)");
+            } else {
+                sb.append(this.getOccupiedArea()[0]).append("-").append(this.getOccupiedArea()[1]);
+            }
+            sb.append(" m^2, guaranteed free ").append(this.area - this.getOccupiedArea()[0]).append(" m^2 or ")
+                    .append(Math.round((1 - this.getOccupiedArea()[1] / this.area) * 100)).append(" % of area)\n");
+        }
+
+        if (this.furnitureList.size() == 0) {
+            sb.append("No furniture");
+        } else {
+            sb.append("Furniture:\n");
+            for (Furniture furniture : this.furnitureList) {
+                sb.append(furniture).append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

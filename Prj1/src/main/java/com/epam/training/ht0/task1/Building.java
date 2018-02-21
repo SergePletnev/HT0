@@ -35,14 +35,12 @@ public class Building {
         return rooms;
     }
 
-    //TODO
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.name).append("\n");
         for (Room room : this.rooms) {
-            sb.append(room.toString());
+            sb.append(room.toString()).append("\n");
         }
         return sb.toString();
     }
