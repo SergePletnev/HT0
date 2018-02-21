@@ -19,6 +19,7 @@
 *.rar
 
 # IntelliJ
+*.iml
 .idea/ 
 target/
 
