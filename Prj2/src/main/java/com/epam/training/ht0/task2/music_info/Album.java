@@ -1,14 +1,13 @@
-package com.epam.training.ht0.task2;
+package com.epam.training.ht0.task2.music_info;
 
 import java.util.ArrayList;
 
 public class Album {
-    private ArrayList<Song> songs;
+    private ArrayList<Song> songs = new ArrayList<>();
     private String name;
 
     public Album(String name) {
         this.name = name;
-        songs = new ArrayList<Song>();
     }
 
     public ArrayList<Song> getSongs() {

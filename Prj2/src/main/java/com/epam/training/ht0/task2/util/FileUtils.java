@@ -1,6 +1,7 @@
-package com.epam.training.ht0.task2;
+package com.epam.training.ht0.task2.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class FileUtils {
@@ -17,6 +18,11 @@ public class FileUtils {
                 }
             }
         }
+    }
+
+    public static boolean isPathValid(String path) {
+        File file = new File(path);
+        return file.exists();
     }
 
 }
