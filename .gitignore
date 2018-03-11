@@ -21,7 +21,7 @@
 *.tar.gz
 *.rar
 
-# IntelliJ
+# IntelliJ IDEA
 *.iml
 .idea/ 
 target/
